@@ -7,7 +7,19 @@ export default Ember.Service.extend({
 		this.socket = io("http://localhost:3000/hca");
 	}.on("init"),
 
-	send: function(message) {
-		this.socket.emit("message", message);
+	createRequest: function(value) {
+		this.socket.emit("createRequest", value);
+	},
+
+	handleRequest: function(value) {
+		this.socket.emit("handleRequest", value);
+	},
+
+	completeRequest: function(value) {
+		this.socket.emit("completeRequest", value);
+	},
+
+	releaseRequest: function(value) {
+		this.socket.emit("releaseRequest", value);
 	}
 });

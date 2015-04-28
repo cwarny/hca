@@ -8,6 +8,7 @@ router.use(require("body-parser").json());
 router.use(require("./auth"));
 router.use("/sessions", require("./controllers/api/sessions"));
 router.use("/users", require("./controllers/api/users"));
+router.use("/requests", require("./controllers/api/requests"));
 router.use(errorHandlers.error);
 router.use(errorHandlers.notFound);
 

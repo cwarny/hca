@@ -1,5 +1,20 @@
 <ul class="list-group">
-	{{#each req in pendingRequests}}
-		<li class="list-group-item">{{req.message}} from {{req.from}}</li>
-	{{/each}}
+	
 </ul>
+
+<table class="table">
+	<thead>
+		<tr>
+			{{!-- <th></th> --}}
+			<th>Message</th>
+			<th>From</th>
+			<th>When</th>
+			<th>Handling</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each model as |req|}}
+			{{patient-request req=req handled="handle" completed="complete" released="release" target=view}}
+		{{/each}}
+	</tbody>
+</table>

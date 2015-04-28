@@ -10,9 +10,6 @@ export default Ember.Controller.extend({
 			.on("authenticated", function() {
 				console.log("authenticated");
 			})
-			.on("message", function(value) {
-				console.log(value);
-			})
 			.emit("authenticate", { token: this.get("session.token") });
 	},
 
@@ -22,8 +19,8 @@ export default Ember.Controller.extend({
 	},
 
 	actions: {
-		sendRequest: function(value) {
-			this.get("websocket").send(value);
+		createRequest: function(value) {
+			this.get("websocket").createRequest(value);
 		}
 	}
 });

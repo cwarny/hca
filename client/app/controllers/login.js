@@ -10,7 +10,6 @@ export default Ember.Controller.extend({
 			var _this = this;
 			this.set("error", null);
 			this.get("session").authenticate("authenticator:custom", this.get("credentials")).then(function() {
-				debugger;
 				if (_this.get("session.scope") === "admin") _this.transitionToRoute("admin");
 			}, function(err) {
 				_this.set("error", err.responseText);

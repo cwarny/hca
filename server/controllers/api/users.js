@@ -11,8 +11,6 @@ router.get("/", function(req, res) {
 });
 
 router.post("/", function(req, res, next) {
-	console.log(req.body.username);
-	console.log(req.body.password);
 	var user = new User({username:req.body.username});
 	bcrypt.hash(req.body.password, 10, function(err, hash) {
 		user.password = hash;

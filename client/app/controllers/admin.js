@@ -3,20 +3,26 @@ import Ember from "ember";
 export default Ember.Controller.extend({
 	websocket: Ember.inject.service(),
 
-	pendingRequests: function() {
-		return Ember.A([]);
-	}.property(),
-
 	subscribe: function () {
 		var socket = this.get("websocket.socket");
 		var _this = this;
+
 		socket
 			.on("authenticated", function() {
-				console.log("authenticated");
 				socket.emit("addToRoom", "admin");
 			})
-			.on("message", function(value) {
-				_this.get("pendingRequests").pushObject(value);
+			.on("requestCreated", function(value) {
+				_this.get("model").pushObject(Ember.Object.create(value));
+			})
+			.on("requestHandled", function(value) {
+				_this.get("model").findBy("_id", value._id).set("handler", value.handler);
+			})
+			.on("requestCompleted", function(value) {
+				var model = _this.get("model");
+				model.removeObject(model.findBy("_id", value._id));
+			})
+			.on("requestReleased", function(value) {
+				_this.get("model").findBy("_id", value._id).set("handler", null);
 			})
 			.emit("authenticate", { token: this.get("session.token") });
 	},
@@ -25,5 +31,18 @@ export default Ember.Controller.extend({
 		var socket = this.get("websocket.socket");
 		socket.emit("removeFromRoom", "admin");
 		socket.removeAllListeners();
+	},
+
+	actions: {
+		handle: function(req) {
+			this.get("websocket").handleRequest(req);
+		},
+		complete: function(req) {
+			this.get("model").removeObject(req);
+			this.get("websocket").completeRequest(req);
+		},
+		release: function(req) {
+			this.get("websocket").releaseRequest(req);
+		}
 	}
 });

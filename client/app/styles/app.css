@@ -1,0 +1,11 @@
+.clickable {
+	cursor: pointer;
+}
+
+.checked {
+	color: green;
+}
+
+.checkmark {
+	margin-right: 20px;
+}

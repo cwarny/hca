@@ -3,7 +3,11 @@ import AuthenticatedRouteMixin from "simple-auth/mixins/authenticated-route-mixi
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	model: function () {
-		return [];
+		return Ember.$.getJSON("/api/requests").then(function(data) {
+			return data.map(function(d) {
+				return Ember.Object.create(d);
+			});
+		});
 	},
 	beforeModel: function(transition) {
 		if (this.get("session.isAuthenticated")) {

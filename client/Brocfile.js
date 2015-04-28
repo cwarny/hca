@@ -19,6 +19,10 @@ var app = new EmberApp();
 
 app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 
+app.import('bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff', {
+	destDir: 'fonts'
+});
+
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 app.import("bower_components/sio-client/socket.io.js");
 
